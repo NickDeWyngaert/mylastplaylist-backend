@@ -10,6 +10,6 @@ namespace mylastplaylist.Services
         Task<List<Playlist>> GetPlaylists();
         Task<List<User>> GetUsersFromPlaylists();
         Task<Playlist> NewSongToPlaylistWithUserId(int id, Song newsong);
-        Task<Playlist> AddNewPlaylist(UserDTO userdto);
+        Task<Playlist> NewUserWithPlaylist(UserDTO userdto);
     }
 }

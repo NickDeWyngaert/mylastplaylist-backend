@@ -52,9 +52,9 @@ namespace mylastplaylist.Controllers
         }
 
         [HttpPost("/playlists/users")]
-        public async Task<Playlist> NewPlaylist(UserDTO userdto)
+        public async Task<Playlist> NewUserWithPlaylist(UserDTO userdto)
         {
-            Playlist NewPlaylist = await _playlistService.AddNewPlaylist(userdto);
+            Playlist NewPlaylist = await _playlistService.NewUserWithPlaylist(userdto);
             return NewPlaylist;
         }
     }

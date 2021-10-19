@@ -46,7 +46,8 @@ namespace mylastplaylist.Services
             Playlists[Playlists.FindIndex(p => p.User.Id == id)] = PlaylistFromUser;
             return Task.FromResult(PlaylistFromUser);
         }
-        public Task<Playlist> AddNewPlaylist(UserDTO userdto)
+
+        public Task<Playlist> NewUserWithPlaylist(UserDTO userdto)
         {
             Random rnd = new Random();
             User NewUser = new User() { Id = rnd.Next(1, 200), LastName = userdto.lastname, FirstName = userdto.firstname };
