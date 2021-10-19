@@ -1,4 +1,5 @@
-﻿using mylastplaylist.Repositories;
+﻿using mylastplaylist.Model.Dto;
+using mylastplaylist.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace mylastplaylist.Services
             throw new NotImplementedException();
         }
 
-        public Task<Playlist> NewUserWithPlaylist(UserDTO userdto)
+        public Task<Playlist> NewUserWithPlaylist(UserDto userdto)
         {
             throw new NotImplementedException();
         }

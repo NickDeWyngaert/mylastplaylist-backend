@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mylastplaylist.Model.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,10 +48,10 @@ namespace mylastplaylist.Services
             return Task.FromResult(PlaylistFromUser);
         }
 
-        public Task<Playlist> NewUserWithPlaylist(UserDTO userdto)
+        public Task<Playlist> NewUserWithPlaylist(UserDto userdto)
         {
             Random rnd = new Random();
-            User NewUser = new User() { Id = rnd.Next(1, 200), LastName = userdto.lastname, FirstName = userdto.firstname };
+            User NewUser = new User() { Id = rnd.Next(1, 200), LastName = userdto.LastName, FirstName = userdto.FirstName };
             Playlist NewPlaylistWithNewUser = new Playlist() {
                 User = NewUser,
                 Songs = new List<Song>() {}

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using mylastplaylist.Model.Dto;
 
 namespace mylastplaylist.Controllers
 {
@@ -35,7 +36,7 @@ namespace mylastplaylist.Controllers
         }
         
         [HttpPost("/playlists")]
-        public async Task<Playlist> NewPlaylistWithNewUser(UserDTO userdto)
+        public async Task<Playlist> NewPlaylistWithNewUser(UserDto userdto)
         {
             Playlist NewPlaylist = await _playlistService.NewUserWithPlaylist(userdto);
             return NewPlaylist;
