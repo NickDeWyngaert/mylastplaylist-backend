@@ -35,12 +35,9 @@ namespace mylastplaylist
             services.AddMvc();
             
             // Temporary Singletons
-            // Hier zal het zeker aan liggen ofzo?????
             services.AddSingleton<IPlaylistService, MemoryPlaylistService>();
             services.AddSingleton<IConverter, Converter>();
             services.AddSingleton<IPlaylistRepository, PlaylistRepository>();
-            services.AddSingleton<PlaylistDbContext, PlaylistDbContext>();
-            //services.AddSingleton<DbContextOptions, DbContextOptions>();
 
             // Add dbcontext
             services.AddDbContext<PlaylistDbContext>(options =>

@@ -13,7 +13,7 @@ namespace mylastplaylist.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Song> Songs { get; set; }
 
-        public PlaylistDbContext(DbContextOptions options) : base(options) { }
+        public PlaylistDbContext(DbContextOptions<PlaylistDbContext> options) : base(options) { }
 
         public override int SaveChanges()
         {
