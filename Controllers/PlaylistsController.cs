@@ -12,51 +12,52 @@ namespace mylastplaylist.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PlaylistController : ControllerBase
+    [Produces("application/json")]
+    public class PlaylistsController : ControllerBase
     {
 
-        private readonly ILogger<PlaylistController> _logger;
+        private readonly ILogger<PlaylistsController> _logger;
 
         private readonly IConfiguration _configration;
 
         private readonly IService _playlistService;
 
-        public PlaylistController(ILogger<PlaylistController> logger, IConfiguration configration, IService playlistService)
+        public PlaylistsController(ILogger<PlaylistsController> logger, IConfiguration configration, IService playlistService)
         {
             _logger = logger;
             _configration = configration;
             _playlistService = playlistService;
         }
 
-        [HttpGet("/playlists")]
+        [HttpGet]
         public async Task<Playlist[]> GetAllPlaylists()
         {
             List<Playlist> Playlists = await _playlistService.GetPlaylists();
             return Playlists.ToArray();
         }
         
-        [HttpPost("/playlists")]
+        [HttpPost]
         public async Task<Playlist> NewPlaylistWithNewUser(UserDto userdto)
         {
             Playlist NewPlaylist = await _playlistService.NewUserWithPlaylist(userdto);
             return NewPlaylist;
         }
 
-        [HttpGet("/playlists/{id}")]
+        [HttpGet("{id}")]
         public async Task<Playlist> GetPlaylistWithUserId(int id)
         {
             List<Playlist> Playlists = await _playlistService.GetPlaylists();
             return Playlists.Find(p => p.User.Id == id);
         }
 
-        [HttpPost("/playlists/{id}")]
+        [HttpPost("{id}/songs")]
         public async Task<Playlist> PostNewSongToPlaylistWithUserId(int id, Song song)
         {
             Playlist PlaylistWithNewSong = await _playlistService.NewSongToPlaylistWithUserId(id, song);
             return PlaylistWithNewSong;
         }
 
-        [HttpGet("/playlists/users")]
+        [HttpGet("users")]
         public async Task<User[]> GetUsersFromPlaylist()
         {
             List<User> Users = await _playlistService.GetUsersFromPlaylists();
