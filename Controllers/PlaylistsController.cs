@@ -20,9 +20,9 @@ namespace mylastplaylist.Controllers
 
         private readonly IConfiguration _configration;
 
-        private readonly IService _playlistService;
+        private readonly IPlaylistService _playlistService;
 
-        public PlaylistsController(ILogger<PlaylistsController> logger, IConfiguration configration, IService playlistService)
+        public PlaylistsController(ILogger<PlaylistsController> logger, IConfiguration configration, IPlaylistService playlistService)
         {
             _logger = logger;
             _configration = configration;
@@ -30,40 +30,38 @@ namespace mylastplaylist.Controllers
         }
 
         [HttpGet]
-        public async Task<Playlist[]> GetAllPlaylists()
+        public async Task<PlaylistDto[]> GetAllPlaylists()
         {
-            List<Playlist> Playlists = await _playlistService.GetPlaylists();
+            List<PlaylistDto> Playlists = await _playlistService.GetListOfPlaylists();
             return Playlists.ToArray();
         }
         
         [HttpPost]
-        public async Task<Playlist> NewPlaylistWithNewUser(UserDto userdto)
+        public async Task<PlaylistDto> NewPlaylistWithNewUser(UserDto userdto)
         {
-            Playlist NewPlaylist = await _playlistService.NewUserWithPlaylist(userdto);
+            PlaylistDto NewPlaylist = await _playlistService.NewPlaylist(userdto);
             return NewPlaylist;
         }
 
         [HttpGet("{id}")]
-        public async Task<Playlist> GetPlaylistWithUserId(int id)
+        public async Task<PlaylistDto> GetPlaylistWithUserId(int id)
         {
-            List<Playlist> Playlists = await _playlistService.GetPlaylists();
-            return Playlists.Find(p => p.User.Id == id);
+            PlaylistDto Playlist = await _playlistService.GetPlaylistFromUser(id);
+            return Playlist;
         }
 
         [HttpPost("{id}/songs")]
-        public async Task<Playlist> PostNewSongToPlaylistWithUserId(int id, Song song)
+        public async Task<PlaylistDto> PostNewSongToPlaylistWithUserId(int id, SongDto song)
         {
-            Playlist PlaylistWithNewSong = await _playlistService.NewSongToPlaylistWithUserId(id, song);
+            PlaylistDto PlaylistWithNewSong = await _playlistService.NewSongToPlaylistWithUserId(id, song);
             return PlaylistWithNewSong;
         }
 
         [HttpGet("users")]
-        public async Task<User[]> GetUsersFromPlaylist()
+        public async Task<UserDto[]> GetUsersFromPlaylist()
         {
-            List<User> Users = await _playlistService.GetUsersFromPlaylists();
+            List<UserDto> Users = await _playlistService.GetUsersListFromPlaylists();
             return Users.ToArray();
         }
-
-        
     }
 }

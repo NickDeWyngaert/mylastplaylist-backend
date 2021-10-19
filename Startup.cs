@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using mylastplaylist.Data;
+using mylastplaylist.Model.Converter;
+using mylastplaylist.Repositories;
 using mylastplaylist.Services;
 using System;
 using System.Collections.Generic;
@@ -31,9 +33,22 @@ namespace mylastplaylist
         {
             services.AddControllers();
             services.AddMvc();
+            
+            // Temporary Singletons
+            // Hier zal het zeker aan liggen ofzo?????
+            services.AddSingleton<IPlaylistService, MemoryPlaylistService>();
+            services.AddSingleton<IConverter, Converter>();
+            services.AddSingleton<IPlaylistRepository, PlaylistRepository>();
+            services.AddSingleton<PlaylistDbContext, PlaylistDbContext>();
+            //services.AddSingleton<DbContextOptions, DbContextOptions>();
 
-            // Temporary Service with data in memory
-            services.AddSingleton<IService, MemoryService>();
+            // Add dbcontext
+            services.AddDbContext<PlaylistDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("MylastplaylistDatabase"), sqloptions =>
+                {
+
+                })
+            );
 
             // Enable CORS
             services.AddCors(c => {
@@ -44,9 +59,6 @@ namespace mylastplaylist
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Last Playlist", Version ="v1" }); 
             });
-
-            // Add db context
-            services.AddDbContext<PlaylistDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MylastplaylistDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +67,9 @@ namespace mylastplaylist
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                // Swagger
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","v1"));
             }
 
             app.UseHttpsRedirection();
@@ -71,9 +86,7 @@ namespace mylastplaylist
                 endpoints.MapControllers();
             });
 
-            // Swagger
-            app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","v1"));
+            
         }
     }
 }

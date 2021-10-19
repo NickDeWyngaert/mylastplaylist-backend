@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace mylastplaylist.Model.Converter
 {
-    public class PlaylistConverter : IPlaylistConverter
+    public class Converter : IConverter
     {
         private readonly IMapper _mapper;
 
-        public PlaylistConverter()
+        public Converter()
         {
             MapperConfiguration config = new MapperConfiguration(c =>
             {
@@ -21,6 +21,7 @@ namespace mylastplaylist.Model.Converter
                 c.CreateMap<UserDto, User>();
                 c.CreateMap<Song, SongDto>();
                 c.CreateMap<SongDto, Song>();
+
             });
             _mapper = config.CreateMapper();
         }
@@ -37,16 +38,46 @@ namespace mylastplaylist.Model.Converter
             return _mapper.Map<PlaylistDto, Playlist>(playlistdto);
         }
 
-        // List<Song> -> List<SongDto>
-        public List<Song> ConvertListSongToListSongDto(List<SongDto> songsdto)
+        // List<Playlist> -> List<PlaylistDto>
+        public List<PlaylistDto> ConvertListPlaylistToDto(List<Playlist> playlists)
         {
-            return _mapper.Map<List<Song>>(songsdto);
+            return _mapper.Map<List<PlaylistDto>>(playlists);
         }
 
         // List<Song> -> List<SongDto>
-        public List<SongDto> ConvertListSongDtoToListSong(List<Song> songs)
+        public List<SongDto> ConvertListSongDtoToDto(List<Song> songs)
         {
             return _mapper.Map<List<SongDto>>(songs);
+        }
+
+        // Song -> SongDto
+        public SongDto ConvertSongToSongDto(Song song)
+        {
+            return _mapper.Map<Song, SongDto>(song);
+        }
+
+        // SongDto -> Song
+        public Song ConvertSongDtoToSong(SongDto songdto)
+        {
+            return _mapper.Map<SongDto, Song>(songdto);
+        }
+
+        // UserDto -> User
+        public UserDto ConvertUserToUserDto(User user)
+        {
+            return _mapper.Map<User, UserDto>(user);
+        }
+
+        // User -> UserDto
+        public User ConvertUserDtoToUser(UserDto userdto)
+        {
+            return _mapper.Map<UserDto, User>(userdto);
+        }
+
+        // List<User> -> List<UserDto>
+        public List<UserDto> ConvertListUserToDto(List<User> users)
+        {
+            return _mapper.Map<List<UserDto>>(users);
         }
     }
 }
