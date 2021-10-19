@@ -32,16 +32,13 @@ namespace mylastplaylist
             services.AddControllers();
             services.AddMvc();
             services.AddSingleton<IPlaylistService, PlaylistService>();
-            services.AddCors(options =>
-            {
-                options.AddPolicy(MyAllowSpecificOrigins,
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:4200")
-                                        .AllowAnyHeader()
-                                        .AllowAnyMethod();
-                });
+
+            // Enable CORS
+            services.AddCors(c => {
+                c.AddPolicy("Alloworigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
+
+            // Swagger
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Last Playlist", Version ="v1" }); 
             });
@@ -59,7 +56,8 @@ namespace mylastplaylist
 
             app.UseRouting();
 
-            app.UseCors(MyAllowSpecificOrigins);
+            // Enable CORS
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthorization();
 
@@ -68,6 +66,7 @@ namespace mylastplaylist
                 endpoints.MapControllers();
             });
 
+            // Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","v1"));
         }
