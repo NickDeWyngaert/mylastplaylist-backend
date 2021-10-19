@@ -10,9 +10,9 @@ namespace mylastplaylist.Data
     {
         public PlaylistDbContext(DbContextOptions options) : base (options) { }
 
-        public virtual DbSet<Playlist> Playlists { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Song> Songs { get; set; }
+        public DbSet<Playlist> Playlists { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Song> Songs { get; set; }
 
     }
 }
