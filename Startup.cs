@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using mylastplaylist.Data;
 using mylastplaylist.Services;
 using System;
 using System.Collections.Generic;
@@ -17,8 +19,6 @@ namespace mylastplaylist
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,7 +31,9 @@ namespace mylastplaylist
         {
             services.AddControllers();
             services.AddMvc();
-            services.AddSingleton<IPlaylistService, PlaylistService>();
+
+            // Temporary Service with data in memory
+            services.AddSingleton<IService, MemoryService>();
 
             // Enable CORS
             services.AddCors(c => {
@@ -42,6 +44,9 @@ namespace mylastplaylist
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Last Playlist", Version ="v1" }); 
             });
+
+            // Add db context
+            services.AddDbContext<PlaylistDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MylastplaylistDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace mylastplaylist.Services
 {
-    public class PlaylistService : IPlaylistService
+    public class MemoryService : IService
     {
 
         private List<Playlist> Playlists = new List<Playlist>() { 

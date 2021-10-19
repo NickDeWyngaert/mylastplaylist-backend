@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace mylastplaylist.Services
 {
-    public interface IPlaylistService
+    public interface IService
     {
         Task<List<Playlist>> GetPlaylists();
         Task<List<User>> GetUsersFromPlaylists();

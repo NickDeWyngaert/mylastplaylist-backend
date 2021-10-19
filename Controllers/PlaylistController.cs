@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace mylastplaylist.Controllers
 {
@@ -15,11 +16,14 @@ namespace mylastplaylist.Controllers
 
         private readonly ILogger<PlaylistController> _logger;
 
-        private readonly IPlaylistService _playlistService;
+        private readonly IConfiguration _configration;
 
-        public PlaylistController(ILogger<PlaylistController> logger, IPlaylistService playlistService)
+        private readonly IService _playlistService;
+
+        public PlaylistController(ILogger<PlaylistController> logger, IConfiguration configration, IService playlistService)
         {
             _logger = logger;
+            _configration = configration;
             _playlistService = playlistService;
         }
 
@@ -28,6 +32,13 @@ namespace mylastplaylist.Controllers
         {
             List<Playlist> Playlists = await _playlistService.GetPlaylists();
             return Playlists.ToArray();
+        }
+        
+        [HttpPost("/playlists")]
+        public async Task<Playlist> NewPlaylistWithNewUser(UserDTO userdto)
+        {
+            Playlist NewPlaylist = await _playlistService.NewUserWithPlaylist(userdto);
+            return NewPlaylist;
         }
 
         [HttpGet("/playlists/{id}")]
@@ -51,11 +62,6 @@ namespace mylastplaylist.Controllers
             return Users.ToArray();
         }
 
-        [HttpPost("/playlists/users")]
-        public async Task<Playlist> NewUserWithPlaylist(UserDTO userdto)
-        {
-            Playlist NewPlaylist = await _playlistService.NewUserWithPlaylist(userdto);
-            return NewPlaylist;
-        }
+        
     }
 }
