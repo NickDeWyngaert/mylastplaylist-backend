@@ -17,6 +17,10 @@ namespace mylastplaylist.Model.Converter
             {
                 c.CreateMap<Playlist, PlaylistDto>();
                 c.CreateMap<PlaylistDto, Playlist>();
+                c.CreateMap<User, UserDto>();
+                c.CreateMap<UserDto, User>();
+                c.CreateMap<Song, SongDto>();
+                c.CreateMap<SongDto, Song>();
             });
             _mapper = config.CreateMapper();
         }
@@ -31,6 +35,18 @@ namespace mylastplaylist.Model.Converter
         public Playlist ConvertPlaylistDtoToPlaylist(PlaylistDto playlistdto)
         {
             return _mapper.Map<PlaylistDto, Playlist>(playlistdto);
+        }
+
+        // List<Song> -> List<SongDto>
+        public List<Song> ConvertListSongToListSongDto(List<SongDto> songsdto)
+        {
+            return _mapper.Map<List<Song>>(songsdto);
+        }
+
+        // List<Song> -> List<SongDto>
+        public List<SongDto> ConvertListSongDtoToListSong(List<Song> songs)
+        {
+            return _mapper.Map<List<SongDto>>(songs);
         }
     }
 }
