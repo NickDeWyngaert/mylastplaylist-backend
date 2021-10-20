@@ -32,7 +32,7 @@ namespace mylastplaylist.Repositories
 
         public async Task<Playlist> GetPlaylistAsync(int userid)
         {
-            return await _dbSet.Where(p => p.User.Id == userid).FirstAsync();
+            return await _dbSet.Where(p => p.User.Id == userid).Include(u => u.User).FirstAsync();
         }
 
         public void AddPlaylist(Playlist newPlaylist)
