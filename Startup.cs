@@ -34,10 +34,10 @@ namespace mylastplaylist
             services.AddControllers();
             services.AddMvc();
             
-            // Temporary Singletons
-            services.AddSingleton<IPlaylistService, MemoryPlaylistService>();
-            services.AddSingleton<IConverter, Converter>();
-            services.AddSingleton<IPlaylistRepository, PlaylistRepository>();
+            // Scoped services
+            services.AddScoped<IPlaylistService, DbPlaylistService>();
+            services.AddScoped<IConverter, Converter>();
+            services.AddScoped<IPlaylistRepository, PlaylistRepository>();
 
             // Add dbcontext
             services.AddDbContext<PlaylistDbContext>(options =>

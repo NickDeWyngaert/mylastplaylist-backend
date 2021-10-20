@@ -27,14 +27,12 @@ namespace mylastplaylist.Repositories
 
         public async Task<List<Playlist>> GetListOfPlaylistAsync()
         {
-            // TODO
-            throw new NotImplementedException();
+            return await _dbContext.Playlists.ToListAsync();
         }
 
         public async Task<Playlist> GetPlaylistAsync(int userid)
         {
-            // TODO
-            throw new NotImplementedException();
+            return await _dbSet.Where(p => p.User.Id == userid).FirstAsync();
         }
 
         public void AddPlaylist(Playlist newPlaylist)
