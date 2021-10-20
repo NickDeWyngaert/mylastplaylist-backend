@@ -72,5 +72,12 @@ namespace mylastplaylist.Services
             Playlists.Add(NewPlaylistWithNewUser);
             return Task.FromResult(_converter.ConvertPlaylistToPlaylistDto(NewPlaylistWithNewUser));
         }
+
+        public Task<List<SongDto>> GetSongsFromPlaylistUser(int userid)
+        {
+            Playlist PlaylistFromUser = Playlists[Playlists.FindIndex(p => p.User.Id == userid)];
+            List<Song> songsFromPlaylistUser = PlaylistFromUser.Songs;
+            return Task.FromResult(_converter.ConvertListSongToDto(songsFromPlaylistUser));
+        }
     }
 }

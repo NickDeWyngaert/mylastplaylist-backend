@@ -11,6 +11,7 @@ namespace mylastplaylist.Services
         Task<List<PlaylistDto>> GetListOfPlaylists();
         Task<List<UserDto>> GetUsersListFromPlaylists();
         Task<PlaylistDto> GetPlaylistFromUser(int userid);
+        Task<List<SongDto>> GetSongsFromPlaylistUser(int userid);
         Task<PlaylistDto> NewSongToPlaylistWithUserId(int userid, SongDto newsongdto);
         Task<PlaylistDto> NewPlaylist(UserDto newuserdto);
     }

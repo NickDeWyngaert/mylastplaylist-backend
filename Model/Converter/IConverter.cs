@@ -6,7 +6,7 @@ namespace mylastplaylist.Model.Converter
     public interface IConverter
     {
         List<PlaylistDto> ConvertListPlaylistToDto(List<Playlist> playlists);
-        List<SongDto> ConvertListSongDtoToDto(List<Song> songs);
+        List<SongDto> ConvertListSongToDto(List<Song> songs);
         List<UserDto> ConvertListUserToDto(List<User> users);
         Playlist ConvertPlaylistDtoToPlaylist(PlaylistDto playlistdto);
         PlaylistDto ConvertPlaylistToPlaylistDto(Playlist playlist);

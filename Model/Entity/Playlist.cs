@@ -9,7 +9,11 @@ namespace mylastplaylist
     {
         public int Id { get; set; }
         public User User { get; set; }
-        public List<Song> Songs { get; set; }
+        public List<Song> Songs { get; set; } = new List<Song>();
 
+        public void AddSong(Song song)
+        {
+            Songs.Add(song);
+        }
     }
 }

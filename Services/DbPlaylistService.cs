@@ -52,10 +52,19 @@ namespace mylastplaylist.Services
         public async Task<PlaylistDto> NewSongToPlaylistWithUserId(int userid, SongDto newsongdto)
         {
             Playlist existingPlaylist = await _repository.GetPlaylistAsync(userid);
-            existingPlaylist.Songs.Add(_converter.ConvertSongDtoToSong(newsongdto));
+            if (existingPlaylist.Songs == null) existingPlaylist.Songs = new List<Song>();
+            Song newsong = _converter.ConvertSongDtoToSong(newsongdto);
+            existingPlaylist.AddSong(newsong);
             _repository.UpdatePlaylist(existingPlaylist);
             await _repository.SaveChangesAsync();
             return _converter.ConvertPlaylistToPlaylistDto(existingPlaylist);
+        }
+
+        public async Task<List<SongDto>> GetSongsFromPlaylistUser(int userid)
+        {
+            Playlist existingPlaylist = await _repository.GetPlaylistAsync(userid);
+            List<Song> songsFromExistingPlaylist = existingPlaylist.Songs;
+            return _converter.ConvertListSongToDto(songsFromExistingPlaylist);
         }
     }
 }

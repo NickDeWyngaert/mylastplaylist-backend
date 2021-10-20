@@ -43,17 +43,24 @@ namespace mylastplaylist.Controllers
             return NewPlaylist;
         }
 
-        [HttpGet("{id}")]
-        public async Task<PlaylistDto> GetPlaylistWithUserId(int id)
+        [HttpGet("{userid}")]
+        public async Task<PlaylistDto> GetPlaylistWithUserId(int userid)
         {
-            PlaylistDto Playlist = await _playlistService.GetPlaylistFromUser(id);
+            PlaylistDto Playlist = await _playlistService.GetPlaylistFromUser(userid);
             return Playlist;
         }
 
-        [HttpPost("{id}/songs")]
-        public async Task<PlaylistDto> PostNewSongToPlaylistWithUserId(int id, SongDto song)
+        [HttpGet("{userid}/songs")]
+        public async Task<List<SongDto>> GetAllSongsFromPlaylistUser(int userid)
         {
-            PlaylistDto PlaylistWithNewSong = await _playlistService.NewSongToPlaylistWithUserId(id, song);
+            List<SongDto> songsFromExistingPlaylist = await _playlistService.GetSongsFromPlaylistUser(userid);
+            return songsFromExistingPlaylist;
+        }
+
+        [HttpPost("{userid}/songs")]
+        public async Task<PlaylistDto> PostNewSongToPlaylistWithUserId(int userid, SongDto song)
+        {
+            PlaylistDto PlaylistWithNewSong = await _playlistService.NewSongToPlaylistWithUserId(userid, song);
             return PlaylistWithNewSong;
         }
 
