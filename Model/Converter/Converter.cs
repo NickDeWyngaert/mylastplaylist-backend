@@ -15,8 +15,8 @@ namespace mylastplaylist.Model.Converter
         {
             MapperConfiguration config = new MapperConfiguration(c =>
             {
-                c.CreateMap<Playlist, PlaylistDto>();
-                c.CreateMap<PlaylistDto, Playlist>();
+                c.CreateMap<Playlist, PlaylistDto>().ForMember(dest => dest.User, opt => opt.MapFrom(x => x.User));
+                c.CreateMap<PlaylistDto, Playlist>();/*.ForMember(dest => dest.UserDto, opt => opt.MapFrom(x => x.User));*/
                 c.CreateMap<User, UserDto>();
                 c.CreateMap<UserDto, User>();
                 c.CreateMap<Song, SongDto>();

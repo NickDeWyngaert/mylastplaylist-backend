@@ -40,9 +40,9 @@ namespace mylastplaylist.Services
             return _converter.ConvertPlaylistToPlaylistDto(playlist);
         }
 
-        public async Task<PlaylistDto> NewPlaylist(UserDto newuserdto)
+        public async Task<PlaylistDto> NewPlaylist(UserDto newUserdto)
         {
-            PlaylistDto newPlaylistDto = new PlaylistDto() { User= newuserdto, Songs=new List<SongDto>() };
+            PlaylistDto newPlaylistDto = new PlaylistDto() { User= newUserdto, Songs=new List<SongDto>() };
             Playlist newPlaylist = _converter.ConvertPlaylistDtoToPlaylist(newPlaylistDto);
             _repository.AddPlaylist(newPlaylist);
             await _repository.SaveChangesAsync();

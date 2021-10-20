@@ -27,7 +27,7 @@ namespace mylastplaylist.Repositories
 
         public async Task<List<Playlist>> GetListOfPlaylistAsync()
         {
-            return await _dbContext.Playlists.ToListAsync();
+            return await _dbContext.Playlists.Include(u => u.User).ToListAsync();
         }
 
         public async Task<Playlist> GetPlaylistAsync(int userid)

@@ -37,10 +37,10 @@ namespace mylastplaylist.Controllers
         }
 
         [HttpPost]
-        public async Task<PlaylistDto> NewPlaylistWithNewUser(String lastName, string firstName, DateTime dayOfBirth)
+        public async Task<PlaylistDto> NewPlaylistWithNewUser(UserDto newUserDto)
         {
-            UserDto newUserDto = new UserDto() { FirstName=firstName, LastName=lastName, DayOfBirth=dayOfBirth };
-            Console.WriteLine(newUserDto.ToString());
+            //UserDto newUserDto = new UserDto() { FirstName=firstName, LastName=lastName, DayOfBirth=dayOfBirth };
+            Console.WriteLine(newUserDto.FirstName + ' ' + newUserDto.LastName + ' ' + newUserDto.DayOfBirth);
             PlaylistDto NewPlaylist = await _playlistService.NewPlaylist(newUserDto); ;
             return NewPlaylist;
         }
